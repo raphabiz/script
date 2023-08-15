@@ -62,26 +62,41 @@ class Alchemy():
   
 
   def is_element_present(self,driver, locator):
-    try:
+    try :
+      WebDriverWait(driver, 20).until(EC.element_to_be_clickable(By.CLASS_NAME, locator))
+      print("Element exists")
+      return True
+    except : 
+      print("Element does not exist")
+      return False
+    """  try:
         driver.find_element(By.CLASS_NAME,locator)
-        return True
-    except ElementNotInteractableException:
+    except:
         return False
+    return True """
     
   def get_data(self):
-     p=0
-     while self.is_element_present(driver=driver,locator='w-pagination-next.cms-load_next-button') == True :
+     page=0
+     while driver.find_element(By.CLASS_NAME,'w-pagination-next.cms-load_next-button').is_displayed() :
        list= driver.find_elements(By.CLASS_NAME,'cms-filter_item.is--dapp.w-dyn-item')
-       print(len(list))  
+       page=page+1
+       print("Page "+str(page))
        for i in range(len(list)):
-        print(i+1)
-        """ self.process_page(i+1)
-        driver.back() """
-       p=p+1
-       print("Page "+str(p))
-       time.sleep(3)
-       driver.find_element(By.CLASS_NAME,'w-pagination-next.cms-load_next-button').click() 
-
+         print("Element "+str(i+1))
+         self.process_page(i+1)
+         driver.back()
+       time.sleep(4)
+       if driver.find_element(By.CLASS_NAME,'w-pagination-next.cms-load_next-button').is_displayed() :
+          driver.find_element(By.CLASS_NAME,'w-pagination-next.cms-load_next-button').click() 
+     list= driver.find_elements(By.CLASS_NAME,'cms-filter_item.is--dapp.w-dyn-item')
+     page=page+1
+     print("Page "+str(page))
+     for i in range(len(list)):
+         print("Element "+str(i+1))
+         self.process_page(i+1)
+         driver.back()
+     print("done")
+      
   def verify_duplicate_in_csv(self, dapps,csvfilename):
     with open(f"{csvfilename}.csv",encoding='utf-8') as f:
         reader = csv.reader(f, delimiter=",", quotechar='"')
