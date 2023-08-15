@@ -27,7 +27,7 @@ driver.get("https://token2049.brella.io/events/token2049singapore/people")
 driver.set_window_size(1280, 680)
 
 
-class Alchemy():
+class Token2049():
   def __init__(self):
      ""
 
@@ -96,7 +96,7 @@ class Alchemy():
      time.sleep(random.randint(2, 5)) 
      self.process_page()
      time.sleep(random.randint(2, 5)) 
-     
+
      """ page=0
      while driver.find_element(By.CLASS_NAME,'w-pagination-next.cms-load_next-button').is_displayed() :
        list= driver.find_elements(By.CLASS_NAME,'cms-filter_item.is--dapp.w-dyn-item')
@@ -154,6 +154,6 @@ class Alchemy():
           w.writerow(dapps)
 
 # Instantiate the Alchemy class and call the get_data method
-alchemy = Alchemy()
-alchemy.get_data() 
+token2049 = Token2049()
+token2049.get_data() 
 
