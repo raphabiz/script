@@ -6,6 +6,7 @@
 
 import csv
 import os
+import random
 from dotenv import load_dotenv
 
 from selenium import webdriver
@@ -28,31 +29,38 @@ driver.set_window_size(1280, 680)
 
 class Alchemy():
   def __init__(self):
-        """ self.driver = webdriver.Chrome()
-        self.driver.get("https://www.alchemy.com/dapps")
-        self.driver.set_window_size(1280, 680) """
+     ""
 
-  def process_page(self,i):
-    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="root"]/div/div/section/section/div/main/div[1]/a[2]'))).click()
-    time.sleep(1)
-    title = driver.find_element(By.XPATH,'//*[@id="w-node-_8e8f92b4-41cd-c97d-c0c2-f11963c19fa0-551a0e8a"]/div[1]/div[2]/h1[2]').get_attribute("innerHTML")
-    image_url = driver.find_element(By.XPATH,'//*[@id="w-node-_0b28749b-1df0-9158-e12d-ade7d09ab962-551a0e8a"]/img').get_attribute("src")
-    twitter= driver.find_element(By.XPATH,'//*[@id="w-node-_0b28749b-1df0-9158-e12d-ade7d09ab977-551a0e8a"]/div[1]/a[2]').get_attribute("href")
-    website=driver.find_element(By.XPATH,'//*[@id="w-node-a6e2b1fc-baea-8113-f670-112998a3fa78-551a0e8a"]/a[2]').get_attribute('href')
-    description = driver.find_element(By.XPATH,'//*[@id="w-node-_0b28749b-1df0-9158-e12d-ade7d09ab990-551a0e8a"]/p').get_attribute('innerHTML')
-    chains = driver.find_element(By.XPATH,'//*[@id="w-node-_0b28749b-1df0-9158-e12d-ade7d09ab966-551a0e8a"]/div[3]/div[2]').get_attribute('innerHTML')
-    dapps ={
-       "title":title,
-       "image":image_url,
-       "twitter":twitter,
-       "website":website,
-       "tags": self.get_tags(),
-       "chains":chains,
-       "description":description
+  def process_page(self):
+    time.sleep(random.randint(2, 5)) 
+    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="root"]/div/div/section/section/div/main/div[2]/div[2]/div[1]'))).click()
+    time.sleep(random.randint(2, 5)) 
+    name =driver.find_element(By.CLASS_NAME,'css-1f4536o.efx8l0f2').get_attribute("innerHTML") 
+    company = driver.find_element(By.CLASS_NAME,'css-1xxa55e.efx8l0f1').get_attribute("innerHTML")
+    position= driver.find_element(By.CLASS_NAME,'css-w5xx65.efx8l0f0').get_attribute("innerHTML")
+    joining_date=driver.find_element(By.CLASS_NAME,'css-ltu1lh.e7do1940').get_attribute('innerHTML')
+    try :
+      introduction = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME,'css-1cgtjyh.ee7qfm0'))).get_attribute('innerHTML')
+    except :
+      introduction =""
+    try :
+      offering =  WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME,'css-17wcctt.e1837n181')))
+    except :
+       offering = ""
+      
+    attendee ={
+       "name":name,
+       "company":company,
+       "position":position,
+       "joinig_date":joining_date,
+       "introduction":introduction,
+       "offering":offering,
+
     }
-    columns=["title","image","twitter","website","tags","chains","description"]
+    print(attendee)
+    """ columns=["name","company","position","joining_date","introduction","offering"]
 
-    self.save_to_csv(dapps,columns,"alchemy")
+    self.save_to_csv(attendee,columns,"token2049") """
 
   def get_tags(self):
      list= driver.find_elements(By.CLASS_NAME,'item-header_tag.is--parent.w-inline-block')
@@ -64,33 +72,31 @@ class Alchemy():
         array.append(driver.find_element(By.XPATH,f'//*[@id="w-node-_0b28749b-1df0-9158-e12d-ade7d09ab968-551a0e8a"]/div[2]/div/div[{i+1}]/a/div').get_attribute("innerHTML"))
      return array 
   
-
-  def is_element_present(self,driver, locator):
-    try :
-      WebDriverWait(driver, 20).until(EC.element_to_be_clickable(By.CLASS_NAME, locator))
-      print("Element exists")
-      return True
-    except : 
-      print("Element does not exist")
-      return False
-    """  try:
-        driver.find_element(By.CLASS_NAME,locator)
-    except:
-        return False
-    return True """
   def get_logged_in(self):
     WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="root"]/div/div/div[1]/div[2]/div/div/button[2]'))).click()
     input_email =driver.find_element(By.XPATH,'//*[@id="sign-in_email"]')
     input_email.send_keys(os.getenv('email'))
     driver.find_element(By.XPATH,'//*[@id="sign-in"]/button').click()
-    time.sleep(2)
+    time.sleep(random.randint(2, 5)) 
     input_password =driver.find_element(By.XPATH,'//*[@id="sign-in_password"]')
     input_password.send_keys(os.getenv('password'))
     driver.find_element(By.XPATH,'//*[@id="sign-in"]/button').click()
-    time.sleep(2)
 
   def get_data(self):
      self.get_logged_in()
+     time.sleep(random.randint(2, 5)) 
+     # Click on All Attendees sub section
+     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="root"]/div/div/section/section/div/main/div[1]/a[2]'))).click() 
+     # Click on number results selector 
+     time.sleep(random.randint(2, 5)) 
+     driver.find_element(By.XPATH,'//*[@id="root"]/div/div/section/section/div/main/div[2]/ul/li[10]/div/div[1]/span[2]').click()
+     # Select 120 results per page
+     time.sleep(random.randint(2, 5)) 
+     driver.find_element(By.XPATH,'//*[@id="root"]/div/div/section/section/div/main/div[2]/ul/li[10]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]').click()
+     time.sleep(random.randint(2, 5)) 
+     self.process_page()
+     time.sleep(random.randint(2, 5)) 
+     
      """ page=0
      while driver.find_element(By.CLASS_NAME,'w-pagination-next.cms-load_next-button').is_displayed() :
        list= driver.find_elements(By.CLASS_NAME,'cms-filter_item.is--dapp.w-dyn-item')
