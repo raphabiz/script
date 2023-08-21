@@ -30,12 +30,12 @@ class Coincarp():
   def process_page(self,i):
     # start timer
     start = time.time()
-    time.sleep(random.randint(2,5)) 
-
+    time.sleep(5)
     name = self.driver.find_element(By.XPATH,f'//*[@id="fundraisingListTable"]/tbody/tr[{i}]/td[1]/a/span').get_attribute("innerHTML") 
-
+    time.sleep(5)
     # change page
     newurl=self.driver.find_element(By.XPATH,f'//*[@id="fundraisingListTable"]/tbody/tr[{i}]/td[1]/a').get_attribute('href')
+    
     self.driver.get(newurl)
 
     try :
@@ -55,93 +55,124 @@ class Coincarp():
     logo = self.driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div[2]/div[3]/div/div/div[1]/img').get_attribute("src")
     category=self.driver.find_element(By.XPATH,'//*[@id="detailContent"]/div[1]/div[4]/p[2]/span/a').get_attribute('innerHTML') 
     try :
-       project_info=self.driver.find_element(By.XPATH,'//*[@id="detailContent"]/div[7]/p').get_attribute('innerHTML')
+       project_info=self.driver.find_element(By.CSS_SELECTOR,'#detailContent > div.cryptocurrentcies-info.mt-1 > p').get_attribute('innerHTML')
     except :
        project_info=self.driver.find_element(By.XPATH,'//*[@id="detailContent"]/div[6]/p').get_attribute('innerHTML')
-
+    
     company ={
        "name":name,
        "logo":logo,
        "project_info":project_info,
-       "financing_amout":financing_amount,
+       "financing_amount":financing_amount,
        "valuation":valuation,
        "category":category,
        "subcategory":subcategory,
        "links":self.get_links(),
        "investors":self.get_investors()
       }
+    
     pprint.pprint(company)
-
+    print("------")
+   
     # go back to the main page 
     self.driver.back()
     # End timer
     end = time.time()
-      # Evaluate execution time
+    # Evaluate execution time
     elapsed_time = end - start
     print('Execution time:', elapsed_time, 'seconds')
-    """ columns=["name","company","position","joining_date","introduction","offering"]
+    """ columns=["name","logo","project_info","financing_amount","valuation","category","subcategory","links","investors"]
 
-    self.save_to_csv(attendee,columns,"token2049") """
+    self.save_to_csv(company,columns,"coincarp") """
 
   def get_links(self):
     links={}
     try: 
-      all= self.driver.find_element(By.XPATH,'//*[@id="detailContent"]/div[6]')
+      all= self.driver.find_element(By.CSS_SELECTOR,'#detailContent > div.social-list.d-flex') 
       # Iterate on all links
-      for i in range(len(all.find_elements(By.XPATH,'./*'))):
-       key = self.driver.find_element(By.XPATH,f'//*[@id="detailContent"]/div[6]/a[{i+1}]').get_attribute('data-original-title')
-       value = self.driver.find_element(By.XPATH,f'//*[@id="detailContent"]/div[6]/a[{i+1}]').get_attribute('href')
+      for i in range(len(all.find_elements(By.XPATH,'./*'))):       
+       key = self.driver.find_element(By.CSS_SELECTOR,f'#detailContent > div.social-list.d-flex > a:nth-child({i+1})').get_attribute('data-original-title')
+       value = self.driver.find_element(By.CSS_SELECTOR,f'#detailContent > div.social-list.d-flex > a:nth-child({i+1})').get_attribute('href')
        links[key] = value
     except:
-      all= self.driver.find_element(By.XPATH,'//*[@id="detailContent"]/div[5]')
-      # Iterate on all links
-      for i in range(len(all.find_elements(By.XPATH,'./*'))):
-       key = self.driver.find_element(By.XPATH,f'//*[@id="detailContent"]/div[5]/a[{i+1}]').get_attribute('data-original-title')
-       value = self.driver.find_element(By.XPATH,f'//*[@id="detailContent"]/div[5]/a[{i+1}]').get_attribute('href')
-       links[key] = value
+       print("error")
     return links
   
   def get_investors(self):
-    investors={}
-    try:
-      all= self.driver.find_element(By.CSS_SELECTOR,'#tableInvestorList > tbody')
+   investors={}
+   time.sleep(5)
+   try :
+     all= self.driver.find_element(By.CSS_SELECTOR,'#tableInvestorList > tbody')
+     size = len(all.find_elements(By.XPATH,'./*'))
+   except :
+     size =0
+   if  size > 0 :
       # iterate on all investors
       for i in range(len(all.find_elements(By.XPATH,'./*'))): 
+       time.sleep(5)
        try:
           self.driver.find_element(By.XPATH,f'//*[@id="tableInvestorList"]/tbody/tr[{i+1}]/td[4]/span').get_attribute("innerHTML")
-          year_funded = ""
+          year_founded = "" 
        except:
-          year_funded = ""
-          year_funded = self.driver.find_element(By.XPATH,f'//*[@id="tableInvestorList"]/tbody/tr[{i+1}]/td[4]').get_attribute("innerHTML")
+          year_founded = self.driver.find_element(By.XPATH,f'//*[@id="tableInvestorList"]/tbody/tr[{i+1}]/td[4]').get_attribute("innerHTML")
        
        logo = self.driver.find_element(By.XPATH,f'//*[@id="tableInvestorList"]/tbody/tr[{i+1}]/td[1]/div/a/img').get_attribute("src")
        name = self.driver.find_element(By.XPATH,f'//*[@id="tableInvestorList"]/tbody/tr[{i+1}]/td[1]/div/a/span').get_attribute("innerHTML")
+       links =self.get_investors_links(i+1)
        
        # change url 
-       """  newurl = self.driver.find_element(By.XPATH,f'//*[@id="tableInvestorList"]/tbody/tr[{i+1}]/td[1]/div/a').get_attribute('href')
+       newurl = self.driver.find_element(By.XPATH,f'//*[@id="tableInvestorList"]/tbody/tr[{i+1}]/td[1]/div/a').get_attribute('href')
        self.driver.get(newurl)
+       
+       # Scrap about data of each investors 
        about = ""
        abouts = self.driver.find_element(By.ID,'projectInfo')
-       for i in range(len(abouts.find_elements(By.XPATH,'./*'))): 
-          print(i)
+       for i in range(len(abouts.find_elements(By.XPATH,'./*'))-1): 
           about = about + " " + self.driver.find_element(By.XPATH,f'//*[@id="projectInfo"]/p[{i+1}]').get_attribute("innerHTML")
-          print(about) """
-
-       # go back to the company page 
-       """ self.driver.back()
-       time.sleep(2) """
-
+          
+       # Scrap investor portfolio
+       portfolio =self.get_investors_portfolio()
+       
        investor ={
           "logo" : logo,
           "name": name,
-          "year_funded": year_funded
+          "year_founded":year_founded,
+          "about":about,
+          "portfolio":portfolio,
+          "links":links
        }
        investors[f"investor {i+1}"] = investor 
-    except:
+
+       # go back to the company page 
+       time.sleep(2)
+       self.driver.back()
+   else:
        investors = ""
 
-    return investors
+   return investors
   
+  def get_investors_portfolio(self):
+      portfolio={}
+      table = self.driver.find_element(By.CSS_SELECTOR,'#tableFundRaisingList > tbody')
+      # iterate on all portfolios project
+      print(len(table.find_elements(By.XPATH,'./*')))
+      for i in range(len(table.find_elements(By.XPATH,'./*'))): 
+       try: 
+          name = self.driver.find_element(By.CSS_SELECTOR,f'#tableFundRaisingList > tbody > tr:nth-child({i+1}) > td.sticky > a > span').get_attribute("innerHTML")
+          amount = self.driver.find_element(By.CSS_SELECTOR,f'#tableFundRaisingList > tbody > tr:nth-child({i+1}) > td:nth-child(5)').get_attribute("innerHTML")
+          coinvestor =self.driver.find_element(By.CSS_SELECTOR,f'#tableFundRaisingList > tbody > tr:nth-child({i+1}) > td:nth-child(6)').get_attribute("innerHTML")
+          funding_date= self.driver.find_element(By.CSS_SELECTOR,f'#tableFundRaisingList > tbody > tr:nth-child({i+1}) > td:nth-child(7)').get_attribute("innerHTML")
+          project ={
+            "name": name,
+            "amount":amount,
+            "coinvestor":coinvestor,
+            "funding_date":funding_date
+          }
+          portfolio[f"project {i+1}"] = project
+       except:
+          print("ERROR")
+      return portfolio
+
   def get_data(self):
      page=0
      time.sleep(2)
@@ -154,6 +185,7 @@ class Coincarp():
        list= odd + even
        page=page+1
        print("Page "+str(page))
+       print(len(list))
        for i in range(len(list)):
          print("Element "+str(i+1))
          self.process_page(i+1)
@@ -162,6 +194,19 @@ class Coincarp():
           break
        self.driver.find_element(By.CLASS_NAME,'paginate_button.page-item.next').click()
 
+  def get_investors_links(self,j):
+    links={}
+    try: 
+      all= self.driver.find_element(By.CSS_SELECTOR,f'#tableInvestorList > tbody > tr:nth-child({j}) > td:nth-child(7) > div') 
+      # Iterate on all links
+      for i in range(len(all.find_elements(By.XPATH,'./*'))):       
+       key = self.driver.find_element(By.CSS_SELECTOR,f'#tableInvestorList > tbody > tr:nth-child({j}) > td:nth-child(7) > div > a:nth-child({i+1})').get_attribute('data-original-title')
+       value = self.driver.find_element(By.CSS_SELECTOR,f'#tableInvestorList > tbody > tr:nth-child({j}) > td:nth-child(7) > div > a:nth-child({i+1})').get_attribute('href')
+       links[key] = value
+    except:
+       print("error")
+    return links
+  
   def is_disable(self,type,locator):
      if type == "xpath":
       try :
