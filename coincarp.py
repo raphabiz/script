@@ -127,8 +127,8 @@ class Coincarp():
        # Scrap about data of each investors 
        about = ""
        abouts = self.driver.find_element(By.ID,'projectInfo')
-       for i in range(len(abouts.find_elements(By.XPATH,'./*'))-1): 
-          about = about + " " + self.driver.find_element(By.XPATH,f'//*[@id="projectInfo"]/p[{i+1}]').get_attribute("innerHTML")
+       for k in range(len(abouts.find_elements(By.XPATH,'./*'))-1): 
+          about = about + " " + self.driver.find_element(By.XPATH,f'//*[@id="projectInfo"]/p[{k+1}]').get_attribute("innerHTML")
           
        # Scrap investor portfolio
        portfolio =self.get_investors_portfolio()
@@ -141,6 +141,7 @@ class Coincarp():
           "portfolio":portfolio,
           "links":links
        }
+       print(i+1)
        investors[f"investor {i+1}"] = investor 
 
        # go back to the company page 
@@ -245,18 +246,18 @@ class Coincarp():
     else:
         print(f"CSV file '{filepath}' already exists.")
 
-  def save_to_csv(self,dapps,columns,csvfilename):
+  def save_to_csv(self,company,columns,csvfilename):
     # Verify if csv file exists
     self.create_csv_if_not_exists(csvfilename,columns)
     # Verify if participant is alredy in file
-    if self.verify_duplicate_in_csv(dapps,csvfilename=csvfilename) == False:
+    if self.verify_duplicate_in_csv(company,csvfilename=csvfilename) == False:
        # Append data to the CSV file
        with open(f'{csvfilename}.csv', 'a', newline='', encoding='UTF-8') as f:
           w = csv.DictWriter(f, fieldnames=columns)
-          print(dapps)
-          w.writerow(dapps)
+          print(company)
+          w.writerow(company)
 
-# Instantiate Token2049 class and call get_data method
+# Instantiate Coincarp class and call get_data method
 coincarp = Coincarp()
 coincarp.get_data() 
 
