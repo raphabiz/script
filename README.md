@@ -5,8 +5,11 @@
 python coincarp.py
 ```
 
-# Output Example
+# Output 
 
+Create coincarp.json file 
+
+Example of element :
 ```bash
 {'category': 'Others',
  'financing_amount': '$2.3M',
