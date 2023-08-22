@@ -20,12 +20,33 @@ from selenium.webdriver.common.action_chains import ActionChains
 import requests
 from bs4 import BeautifulSoup
 from selenium.common.exceptions import NoSuchElementException,ElementNotInteractableException
+import json 
 
 class Coincarp():
   def __init__(self):
     self.driver = webdriver.Chrome()
     self.driver.get("https://www.coincarp.com/fundraising/")
     self.driver.set_window_size(1280, 680)
+
+  def save_dict_to_json(self,input_dict, output_file_path):
+         # Check if the file already exists
+    if os.path.exists(output_file_path):
+        try:
+            with open(output_file_path, 'r') as existing_file:
+                existing_data = json.load(existing_file)
+        except json.JSONDecodeError:
+            existing_data = []
+
+        # Check for duplicates before appending
+        if input_dict not in existing_data:
+            existing_data.append(input_dict)
+
+        with open(output_file_path, 'w') as output_file:
+            json.dump(existing_data, output_file, indent=4)
+    else:
+        with open(output_file_path, 'w') as output_file:
+            json.dump([input_dict], output_file, indent=4)
+
 
   def process_page(self,i):
     # start timer
@@ -81,9 +102,7 @@ class Coincarp():
     # Evaluate execution time
     elapsed_time = end - start
     print('Execution time:', elapsed_time, 'seconds')
-    """ columns=["name","logo","project_info","financing_amount","valuation","category","subcategory","links","investors"]
-
-    self.save_to_csv(company,columns,"coincarp") """
+    self.save_dict_to_json(company,"coincarp.json")
 
   def get_links(self):
     links={}
@@ -160,7 +179,12 @@ class Coincarp():
       for i in range(len(table.find_elements(By.XPATH,'./*'))): 
        try: 
           name = self.driver.find_element(By.CSS_SELECTOR,f'#tableFundRaisingList > tbody > tr:nth-child({i+1}) > td.sticky > a > span').get_attribute("innerHTML")
-          amount = self.driver.find_element(By.CSS_SELECTOR,f'#tableFundRaisingList > tbody > tr:nth-child({i+1}) > td:nth-child(5)').get_attribute("innerHTML")
+          try:
+             self.driver.find_element(By.CSS_SELECTOR,f'#tableFundRaisingList > tbody > tr:nth-child({i+1}) > td:nth-child(5) > span').get_attribute("innerHTML")
+             amount=""
+          except:
+             amount = self.driver.find_element(By.CSS_SELECTOR,f'#tableFundRaisingList > tbody > tr:nth-child({i+1}) > td:nth-child(5)').get_attribute("innerHTML")
+
           coinvestor =self.driver.find_element(By.CSS_SELECTOR,f'#tableFundRaisingList > tbody > tr:nth-child({i+1}) > td:nth-child(6)').get_attribute("innerHTML")
           funding_date= self.driver.find_element(By.CSS_SELECTOR,f'#tableFundRaisingList > tbody > tr:nth-child({i+1}) > td:nth-child(7)').get_attribute("innerHTML")
           project ={
@@ -221,41 +245,6 @@ class Coincarp():
         return True
       except:
         return False
-
-  def verify_duplicate_in_csv(self, dapps,csvfilename):
-    with open(f"{csvfilename}.csv",encoding='utf-8') as f:
-        reader = csv.reader(f, delimiter=",", quotechar='"')
-        # Skip the headers
-        next(reader, None)
-        data_read = [row for row in reader]
-    # Check for duplicate IDs in the data_read list
-    for row in data_read:
-        if row[0] == dapps.get('title'):
-            print(f"Duplicate ID found: {dapps.get('title')}")
-            return True  # Duplicate found
-    print("No duplicate found.")
-    return False  # No duplicate found
-        
-  def create_csv_if_not_exists(self,filepath, header):
-    if not os.path.exists(filepath+'.csv'):
-        with open(filepath+'.csv', 'w', newline='') as csv_file:
-            if header:
-                csv_writer = csv.writer(csv_file)
-                csv_writer.writerow(header)
-        print(f"CSV file '{filepath}' created.")
-    else:
-        print(f"CSV file '{filepath}' already exists.")
-
-  def save_to_csv(self,company,columns,csvfilename):
-    # Verify if csv file exists
-    self.create_csv_if_not_exists(csvfilename,columns)
-    # Verify if participant is alredy in file
-    if self.verify_duplicate_in_csv(company,csvfilename=csvfilename) == False:
-       # Append data to the CSV file
-       with open(f'{csvfilename}.csv', 'a', newline='', encoding='UTF-8') as f:
-          w = csv.DictWriter(f, fieldnames=columns)
-          print(company)
-          w.writerow(company)
 
 # Instantiate Coincarp class and call get_data method
 coincarp = Coincarp()

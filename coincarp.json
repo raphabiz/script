@@ -1,0 +1,180 @@
+[
+    {
+        "name": "Moonbox",
+        "logo": "https://s1.coincarp.com/logo/project/moonbox.png?style=72&v=1691480077",
+        "project_info": "Moonbox is an AI and Web3 startup focusing on developing an interactive protocol with AI that can give life to different digital assets, including NFTs. In&nbsp;July 2023, the Company has successfully been granted Mr.&nbsp;Stephen Chow's&nbsp;cinematic IPs for use in NFTs.",
+        "financing_amount": "",
+        "valuation": "",
+        "category": "Web3",
+        "subcategory": "AI",
+        "links": {
+            "Website": "https://moonbox.co/"
+        },
+        "investors": {
+            "investor 1": {
+                "logo": "https://s1.coincarp.com/logo/investor/bing-ventures.png?style=72&v=1659514023",
+                "name": "Bing Ventures",
+                "year_founded": "",
+                "about": " Bing Ventures is from Singapore. Bing Ventures has made 3 investments so far, the most recent investment project is <a href=\"/fundraising/moonbox-strategic/\" target=\"_blank\">Moonbox</a>, and the investment announcement time is August 21, 2023 According to the CoinCarp fundraising database, Bing Ventures has invested in 1 NFTs projects, 1 Others projects and 1 Web3 projects. Among all, 33.33% of Bing Ventures's investments are NFTs projects. You can contact Bing Ventures via social media Bing Ventures is a pioneering venture capital firm that backs entrepreneurs and early-stage startups driving the next wave of Web3 and blockchain innovations.",
+                "portfolio": {
+                    "project 1": {
+                        "name": "Moonbox",
+                        "amount": "",
+                        "coinvestor": "1",
+                        "funding_date": "08/21/2023"
+                    },
+                    "project 2": {
+                        "name": "Anichess",
+                        "amount": "$1.50M",
+                        "coinvestor": "6",
+                        "funding_date": "06/22/2023"
+                    },
+                    "project 3": {
+                        "name": "Web3Port",
+                        "amount": "$1.00M",
+                        "coinvestor": "12",
+                        "funding_date": "08/03/2022"
+                    }
+                },
+                "links": {
+                    "Website": "https://www.bing-ventures.com/",
+                    "Twitter": "https://twitter.com/BingVentures",
+                    "Linkin": "https://www.linkedin.com/company/bing-ventures"
+                }
+            }
+        }
+    },
+    {
+        "name": "Prins AI",
+        "logo": "https://s1.coincarp.com/logo/project/prins-ai.png?style=72&v=1692673385",
+        "project_info": "PRINS is a service platform focusing on AI digital human training. The platform is committed to creating digital human identities for enterprises, brands, stars, celebrities and everyone, and building a comprehensive digital human ecology.",
+        "financing_amount": "$22M",
+        "valuation": "",
+        "category": "Others",
+        "subcategory": "AI",
+        "links": {
+            "Twitter": "https://twitter.com/Prins_AI",
+            "Telegram": "https://t.co/sAACCu4lck"
+        },
+        "investors": ""
+    },
+    {
+        "name": "Elemental Cognition",
+        "logo": "https://s1.coincarp.com/logo/project/elemental-cognition.png?style=72&v=1692609081",
+        "project_info": "Elemental Cognition provides a revolutionary Generative AI platform with superior natural language understanding that powers expert problem-solving intelligence and research &amp; discovery applications.",
+        "financing_amount": "$60M",
+        "valuation": "",
+        "category": "Others",
+        "subcategory": "AI",
+        "links": {
+            "Website": "https://ec.ai/",
+            "Twitter": "https://twitter.com/elementalcog",
+            "Linkin": "https://www.linkedin.com/company/elementalcognition"
+        },
+        "investors": ""
+    },
+    {
+        "name": "Wiziin",
+        "logo": "https://s1.coincarp.com/logo/project/wiziin.png?style=72&v=1692598592",
+        "project_info": "Founded in 2020 by experienced venture capitalist Tien Nguyen and serial entrepreneur Dang, Wiziin aims to bridge the gap between investors and founders through its new blockchain-based platform.<br> It provides tech platforms specialising in data-driven solutions for startups and investors in capital raising, dealmaking, and co-invest monitoring. It has a network of over 200 investors, and over 5,000 companies have raised funding via the platform.",
+        "financing_amount": "$0.5M",
+        "valuation": "",
+        "category": "Others",
+        "subcategory": "",
+        "links": {
+            "Website": "https://wiziin.com/",
+            "Twitter": "https://twitter.com/WiziinInc",
+            "FaceBook": "https://www.facebook.com/WiziinInc",
+            "Medium": "https://medium.com/@wiziininc",
+            "Linkin": "https://www.linkedin.com/company/wiziininc/"
+        },
+        "investors": ""
+    },
+    {
+        "name": "Jada AI",
+        "logo": "https://s1.coincarp.com/logo/project/jada-ai.png?style=72&v=1692321530",
+        "project_info": "Jada is a cutting-edge Artificial Intelligence being developed by a global team of experts with the aim of being ethical, sustainable and flawless, capable of assisting humanity in overcoming its biggest challenges. The Jada AI will be a Level 3 AGI (Artificial General Intelligence) that can learn by itself and perform any task across any industry while being harmless to humans. Currently in its Incubation Phase, the Jada Mark I Prototype Series will be accessible to a limited number of Early Adopters.",
+        "financing_amount": "$25M",
+        "valuation": "",
+        "category": "Others",
+        "subcategory": "AI",
+        "links": {
+            "Website": "https://jada-ai.com/",
+            "Twitter": "https://twitter.com/jada_ai",
+            "Linkin": "https://www.linkedin.com/company/jada-ai/"
+        },
+        "investors": {
+            "investor 1": {
+                "logo": "https://s1.coincarp.com/logo/investor/lda-capital.png?style=72",
+                "name": "LDA Capital",
+                "year_founded": "2018",
+                "about": " LDA Capital was founded in 2018 and is from United States of America. LDA Capital has made 10 investments so far, the most recent investment project is <a href=\"/fundraising/jada-ai-undisclosed/\" target=\"_blank\">Jada AI</a>, and the investment announcement time is August 18, 2023",
+                "portfolio": {
+                    "project 1": {
+                        "name": "Jada AI",
+                        "amount": "$25.00M",
+                        "coinvestor": "1",
+                        "funding_date": "08/18/2023"
+                    },
+                    "project 2": {
+                        "name": "Sphere 3D",
+                        "amount": "$3.00M",
+                        "coinvestor": "1",
+                        "funding_date": "04/21/2023"
+                    },
+                    "project 3": {
+                        "name": "Digital Entertainment Asset",
+                        "amount": "$10.00M",
+                        "coinvestor": "1",
+                        "funding_date": "12/14/2022"
+                    },
+                    "project 4": {
+                        "name": "XDC Network",
+                        "amount": "$50.00M",
+                        "coinvestor": "1",
+                        "funding_date": "10/03/2022"
+                    },
+                    "project 5": {
+                        "name": "MBD Financials",
+                        "amount": "$10.00M",
+                        "coinvestor": "1",
+                        "funding_date": "08/15/2022"
+                    },
+                    "project 6": {
+                        "name": "Aftermath Islands",
+                        "amount": "$25.00M",
+                        "coinvestor": "1",
+                        "funding_date": "07/26/2022"
+                    },
+                    "project 7": {
+                        "name": "Realm",
+                        "amount": "$10.00M",
+                        "coinvestor": "1",
+                        "funding_date": "07/15/2022"
+                    },
+                    "project 8": {
+                        "name": "Rubix",
+                        "amount": "$100.00M",
+                        "coinvestor": "1",
+                        "funding_date": "07/05/2022"
+                    },
+                    "project 9": {
+                        "name": "SingularityDAO",
+                        "amount": "$25.00M",
+                        "coinvestor": "1",
+                        "funding_date": "05/19/2022"
+                    },
+                    "project 10": {
+                        "name": "Enry's Island Italia",
+                        "amount": "$21.42M",
+                        "coinvestor": "1",
+                        "funding_date": "05/17/2022"
+                    }
+                },
+                "links": {
+                    "Website": "https://www.ldacap.com/"
+                }
+            }
+        }
+    }
+]
